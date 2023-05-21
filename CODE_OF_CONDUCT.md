@@ -22,7 +22,7 @@ The following behaviors are considered unacceptable and will not be tolerated:
 
 ## Reporting Violations
 
-If you witness or experience any behavior that violates the code of conduct, please report it immediately. Contact the project maintainers at [maintainers@example.com]. All reports will be reviewed and investigated promptly. Confidentiality will be maintained throughout the process.
+If you witness or experience any behavior that violates the code of conduct, please report it immediately. Contact the project maintainers at [writam21@outlook.com]. All reports will be reviewed and investigated promptly. Confidentiality will be maintained throughout the process.
 
 ## Consequences
 
