@@ -8,29 +8,57 @@
         exit;
     }
 
-    // Check if the registration form has been submitted
-    if (isset($_POST['register'])) {
+    // Step 1: Get email and password from the user
+    if (isset($_POST['step1_submit'])) {
         // Include the database connection file
         require_once('connection.php');
 
         // Get the form data
-        $username = mysqli_real_escape_string($conn, trim($_POST['username']));
+        $email = mysqli_real_escape_string($conn, trim($_POST['email']));
         $password = mysqli_real_escape_string($conn, trim($_POST['password']));
-        $confirm_password = mysqli_real_escape_string($conn, trim($_POST['confirm_password']));
 
-        // Check if the password and confirm password match
-        if ($password != $confirm_password) {
-            $error = 'Password and confirm password do not match';
+        // Generate and send OTP to user's email
+        // Code to send OTP goes here
+
+        // Store the email and password in session variables
+        $_SESSION['register_email'] = $email;
+        $_SESSION['register_password'] = $password;
+
+        // Proceed to step 2: OTP verification
+        header('Location: verify_otp.php');
+        exit;
+
+        // Close the database connection
+        mysqli_close($conn);
+    }
+
+    // Step 2: Verify OTP and create the user account
+    if (isset($_POST['step2_submit'])) {
+        // Include the database connection file
+        require_once('connection.php');
+
+        // Get the form data
+        $otp = mysqli_real_escape_string($conn, trim($_POST['otp']));
+
+        // Validate the OTP
+        // Code to validate OTP goes here
+
+        if ($otp !== '123456') {
+            $error = 'Invalid OTP';
         } else {
-            // Check if the username already exists in the database
-            $query = "SELECT id FROM users WHERE username='$username'";
+            // Get email and password from session variables
+            $email = $_SESSION['register_email'];
+            $password = $_SESSION['register_password'];
+
+            // Check if the email already exists in the database
+            $query = "SELECT id FROM users WHERE email='$email'";
             $result = mysqli_query($conn, $query);
 
             if (mysqli_num_rows($result) > 0) {
-                $error = 'Username already exists';
+                $error = 'Email already exists';
             } else {
                 // Insert the new user into the database
-                $query = "INSERT INTO users (id, username, password, is_admin) VALUES (".substr(bin2hex(md5($password.$username)),0,5).", '$username', '$password', false)";
+                $query = "INSERT INTO users (email, password) VALUES ('$email', '$password')";
                 mysqli_query($conn, $query);
 
                 // Get the ID of the new user
@@ -39,8 +67,9 @@
                 // Set the user ID in the session variable
                 $_SESSION['user_id'] = $user_id;
 
-                // Redirect to the homepage
-                header('Location: index.php');
+                // Redirect to the homepage or the upload option interface
+                // Modify the following line according to your requirements
+                header('Location: upload_option.php');
                 exit;
             }
         }
@@ -54,34 +83,42 @@
 <html>
 <head>
     <title>Register</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="./css/stylreg.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./css/stylreg.css">
 </head>
 <body>
     <?php if (isset($error)): ?>
         <div><?php echo $error; ?></div>
     <?php endif; ?>
 
-    <form method="post" action="register.php">
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username">
-        </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password">
-        </div>
-        <div>
-            <label for="confirm_password">Confirm Password:</label>
-            <input type="password" id="confirm_password" name="confirm_password">
-        </div>
-        <div>
-            <input type="submit" name="register" value="Register">
-        </div>
-		<div>Already have an account? <a href="login.php">Log in</a></div>
-    </form>
-    
-    <div> </div>
+    <?php if (!isset($_POST['step2_submit'])): ?>
+        <!-- Step 1: Get email and password -->
+        <form method="post" action="register.php">
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password">
+            </div>
+            <div>
+                <input type="submit" name="step1_submit" value="Proceed to Step 2">
+            </div>
+            <div>Already have an account? <a href="login.php">Log in</a></div>
+        </form>
+    <?php else: ?>
+        <!-- Step 2: Verify OTP -->
+        <form method="post" action="register.php">
+            <div>
+                <label for="otp">Enter OTP:</label>
+                <input type="text" id="otp" name="otp">
+            </div>
+            <div>
+                <input type="submit" name="step2_submit" value="Verify OTP">
+            </div>
+        </form>
+    <?php endif; ?>
 </body>
 </html>
