@@ -1,0 +1,29 @@
+/* Style for the post division */
+.post {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.post p {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.post-info {
+  font-size: 14px;
+  color: #666;
+  margin-top: 10px;
+}
+
+.post-info a {
+  color: #666;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+.post-info a:hover {
+  color: #333;
+}

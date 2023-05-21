@@ -1,0 +1,32 @@
+
+#create-post,
+#posts {
+    width: 100%;
+    max-height: 400px;
+    overflow-y: auto;
+	
+	
+}
+
+
+.post-container {
+    background-color: #f4f4f4;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.post-username {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.post-actions {
+    display: flex;
+}

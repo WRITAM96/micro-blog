@@ -1,0 +1,52 @@
+/* Center the form */
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Style the form labels */
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Style the form inputs */
+input[type="text"], input[type="password"] {
+  width: 395px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+
+/* Style the form submit button */
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #3e8e41;
+}
+
+/* Style the error message */
+div.error {
+    color: red;
+    margin-bottom: 20px;
+}
+
+/* Style the "already have an account" message */
+div.already-have-account {
+    margin-top: 20px;
+    font-size: 14px;
+}
