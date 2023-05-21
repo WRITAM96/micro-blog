@@ -18,15 +18,16 @@
         $password = mysqli_real_escape_string($conn, trim($_POST['password']));
 
         // Generate and send OTP to user's email
-        // Code to send OTP goes here
+        $otp = generateOTP(); // Generate OTP
+        sendOTP($email, $otp); // Send OTP to user's email
 
-        // Store the email and password in session variables
+        // Store the email, password, and OTP in session variables
         $_SESSION['register_email'] = $email;
         $_SESSION['register_password'] = $password;
+        $_SESSION['register_otp'] = $otp;
 
         // Proceed to step 2: OTP verification
-        header('Location: verify_otp.php');
-        exit;
+        $step = 2;
 
         // Close the database connection
         mysqli_close($conn);
@@ -41,9 +42,9 @@
         $otp = mysqli_real_escape_string($conn, trim($_POST['otp']));
 
         // Validate the OTP
-        // Code to validate OTP goes here
+        $storedOTP = $_SESSION['register_otp'];
 
-        if ($otp !== '123456') {
+        if ($otp !== $storedOTP) {
             $error = 'Invalid OTP';
         } else {
             // Get email and password from session variables
@@ -77,6 +78,31 @@
         // Close the database connection
         mysqli_close($conn);
     }
+
+    // Function to generate OTP
+    function generateOTP() {
+        // Generate a random 6-digit number
+        $otp = rand(100000, 999999);
+
+        return $otp;
+    }
+
+// Function to send OTP to user's email
+function sendOTP($email, $otp) {
+    $subject = 'OTP Verification';
+    $message = 'Your OTP is: ' . $otp;
+    $headers = 'From: your_email@example.com' . "\r\n" .
+               'Reply-To: your_email@example.com' . "\r\n" .
+               'X-Mailer: PHP/' . phpversion();
+
+    if (mail($email, $subject, $message, $headers)) {
+        echo "done";
+    } else {
+        echo 'Error sending email. Please check your email configuration.';
+    }
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -92,7 +118,7 @@
         <div><?php echo $error; ?></div>
     <?php endif; ?>
 
-    <?php if (!isset($_POST['step2_submit'])): ?>
+    <?php if (!isset($step) || $step === 1): ?>
         <!-- Step 1: Get email and password -->
         <form method="post" action="register.php">
             <div>
@@ -108,7 +134,7 @@
             </div>
             <div>Already have an account? <a href="login.php">Log in</a></div>
         </form>
-    <?php else: ?>
+    <?php elseif ($step === 2): ?>
         <!-- Step 2: Verify OTP -->
         <form method="post" action="register.php">
             <div>
