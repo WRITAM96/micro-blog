@@ -82,6 +82,6 @@
 		<div>Already have an account? <a href="login.php">Log in</a></div>
     </form>
     
-    
+    <div> </div>
 </body>
 </html>
