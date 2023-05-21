@@ -42,7 +42,7 @@
       <a class="navbar__link" href="#">
         <i class="fas fa-ellipsis-h"></i> More
       </a>
-      <a class="navbar__link" href="#">
+      <a class="navbar__link" href="logout.php">
         <i class="fas fa-sign-out-alt"></i> Logout
       </a>
     </div>
