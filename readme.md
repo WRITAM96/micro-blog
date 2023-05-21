@@ -41,4 +41,4 @@ Please make sure to read our [Contributing Guidelines](CONTRIBUTING.md) for deta
 
 ## License
 
-This project is licensed under the [MIT License](MIT LICENSE.md).
+This project is licensed under the [MIT License](MIT-LICENSE.md).
