@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Blog App</title>
+    <title>Y App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="./css/stextyle.css">
     <link rel="stylesheet" type="text/css" href="./css/dropdown.css">
@@ -21,7 +21,7 @@
 <div class="container">
   <nav class="navbar">
     <a class="navbar__logo" href="#" onclick="scrollToTop()">
-      <i class="fab fa-twitter"></i> My Blog App
+      <i class="fab fa-twitter"></i>Y App
     </a>
     <div class="navbar__links">
       <a class="navbar__link" href="#" onclick="scrollToTop()">
